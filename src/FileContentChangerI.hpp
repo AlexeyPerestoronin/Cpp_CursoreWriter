@@ -3,6 +3,7 @@
 #include "Ptr.hpp"
 
 #include <vector>
+#include <queue>
 
 class FileContentChangerI
 {
@@ -11,6 +12,9 @@ class FileContentChangerI
 public:
   using BufferType = char;
   using FileSizeType = uint64_t;
+
+public:
+  static std::queue<std::exception> Errors;
 
 public:
   virtual FileSizeType GetFileSize() const = 0;

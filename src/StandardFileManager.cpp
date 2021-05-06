@@ -2,16 +2,25 @@
 
 #include <type_traits>
 
-StandardFileManager::StandardFileManager(const std::string& targetFileName)
-  : _targetFileName(targetFileName)
-  , BaseFile(_targetFileName, BaseFile::binary | BaseFile::in | BaseFile::out)
+StandardFileManager::StandardFileManager(std::string targetFileName, bool isCreateFileIfNotExist, bool isDeleteFileOnClosing)
+  : _targetFileName(std::move(targetFileName))
+  , _isCreateFileIfNotExist(isCreateFileIfNotExist)
+  , _isDeleteFileOnClosing(isDeleteFileOnClosing)
 {
+  auto openFileMode = BaseFile::binary | BaseFile::in | BaseFile::out | BaseFile::ate;
+  if (isCreateFileIfNotExist)
+    openFileMode |= BaseFile::trunc;
+  BaseFile::open(_targetFileName, openFileMode);
+  if (!BaseFile::is_open())
+     FileContentChangerI::Errors.emplace("target file cannot be opening");
 }
 
 StandardFileManager::~StandardFileManager()
 {
-  BaseFile::flush();
   BaseFile::close();
+  if (_isDeleteFileOnClosing)
+    if (std::remove(_targetFileName.c_str()) != NULL)
+      FileContentChangerI::Errors.emplace("target file cannot be removing");
 }
 
 FileContentChangerI::FileSizeType StandardFileManager::GetFileSize() const

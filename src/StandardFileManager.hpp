@@ -16,9 +16,11 @@ private:
 
 private:
   std::string _targetFileName;
+  bool _isCreateFileIfNotExist;
+  bool _isDeleteFileOnClosing;
 
 public:
-  StandardFileManager(const std::string& targetFileName);
+  StandardFileManager(std::string targetFileName, bool isCreateFileIfNotExist = true, bool isDeleteFileOnClosing = false);
   ~StandardFileManager();
 
 public: // FileControllerI
