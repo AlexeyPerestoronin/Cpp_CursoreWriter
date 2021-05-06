@@ -4,9 +4,9 @@
 
 #include <vector>
 
-class FileControllerI
+class FileContentChangerI
 {
-  Ptr(FileControllerI)
+  Ptr(FileContentChangerI)
 
 public:
   using BufferType = char;

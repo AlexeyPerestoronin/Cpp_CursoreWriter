@@ -14,7 +14,7 @@ StandardFileManager::~StandardFileManager()
   BaseFile::close();
 }
 
-FileControllerI::FileSizeType StandardFileManager::GetFileSize() const
+FileContentChangerI::FileSizeType StandardFileManager::GetFileSize() const
 {
   // note: nc_this <=> non const this
   StandardFileManager* nc_this = const_cast<StandardFileManager*>(this);
@@ -40,7 +40,7 @@ void StandardFileManager::SetCoursePosition(FileSizeType position)
   BaseFile::seekp(static_cast<std::streamoff>(position), std::ios_base::beg);
 }
 
-FileControllerI::FileSizeType StandardFileManager::GetCoursePosition() const
+FileContentChangerI::FileSizeType StandardFileManager::GetCoursePosition() const
 {
   // note: nc_this <=> non const this
   StandardFileManager* nc_this = const_cast<StandardFileManager*>(this);

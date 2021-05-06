@@ -1,12 +1,12 @@
 #pragma once
 
-#include "FileControllerI.hpp"
+#include "FileContentChangerI.hpp"
 
 #include <string>
 #include <fstream>
 
 class StandardFileManager
-  : public FileControllerI
+  : public FileContentChangerI
   , public std::fstream
 {
   Ptr(StandardFileManager)
