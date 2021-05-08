@@ -5,9 +5,9 @@
 #include <string>
 #include <fstream>
 
-class StandardFileManager
+class StandardFileManager final
   : public FileContentChangerI
-  , public std::fstream
+  , protected std::fstream
 {
   Ptr(StandardFileManager)
 
@@ -18,6 +18,11 @@ private:
   std::string _targetFileName;
   bool _isCreateFileIfNotExist;
   bool _isDeleteFileOnClosing;
+  mutable struct
+  {
+    FileSizeType size;
+    bool isCached;
+  } _fileSize;
 
 public:
   StandardFileManager(std::string targetFileName, bool isCreateFileIfNotExist = true, bool isDeleteFileOnClosing = false);
@@ -26,11 +31,14 @@ public:
 public: // FileControllerI
   virtual FileSizeType GetFileSize() const override;
 
-  virtual void SetCourseToEnd() override;
-  virtual void SetCourseToBegin() override;
-  virtual void SetCoursePosition(FileSizeType position) override;
-  virtual FileSizeType GetCoursePosition() const override;
+  virtual void SetCursorToEnd() override;
+  virtual void SetCursorToBegin() override;
+  virtual void SetCursorPosition(FileSizeType position) override;
+  virtual FileSizeType GetCursorPosition() const override;
 
   virtual void WriteData(const BufferType* buffer, FileSizeType size) override;
   virtual std::vector<BufferType> ReadData(FileSizeType size) override;
+
+private:
+  FileSizeType GetRemainingFileSize();
 };
