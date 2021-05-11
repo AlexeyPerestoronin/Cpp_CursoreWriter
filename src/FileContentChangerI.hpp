@@ -1,9 +1,7 @@
 #pragma once
 
 #include "Ptr.hpp"
-
-#include <vector>
-#include <queue>
+#include "FixedQueue.hpp"
 
 class FileContentChangerI
 {
@@ -128,7 +126,7 @@ public:
 #pragma endregion
 
 public:
-  static std::queue<ErrorMain::UniPtr> Errors;
+  static FixedQueue<ErrorMain::UniPtr, 10> Errors;
 
 public:
   virtual FileSizeType GetFileSize() const = 0;

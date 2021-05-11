@@ -96,7 +96,7 @@ void StandardFileManager::WriteData(const BufferType* buffer, FileSizeType size)
   SFM_ACCESS_GOOD(BaseFile::write(buffer, static_cast<std::streamsize>(size)), ErrorWriteDataFail);
 }
 
-std::vector<StandardFileManager::BufferType> StandardFileManager::ReadData(FileSizeType size)
+std::vector<FileContentChangerI::BufferType> StandardFileManager::ReadData(FileSizeType size)
 {
   std::vector<BufferType> result(std::min<size_t>(size, GetRemainingFileSize()), '\0');
   SFM_EXCEPT_GOOD(BaseFile::read(result.data(), static_cast<std::streamsize>(result.size())), ErrorReadDataFail);

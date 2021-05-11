@@ -1,3 +1,3 @@
 #include "FileContentChangerI.hpp"
 
-std::queue<FileContentChangerI::ErrorMain::UniPtr> FileContentChangerI::Errors{};
+FixedQueue<FileContentChangerI::ErrorMain::UniPtr, 10> FileContentChangerI::Errors{};
